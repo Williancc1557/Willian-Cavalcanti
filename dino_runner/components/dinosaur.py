@@ -31,17 +31,14 @@ class Dinosaur:
         if user_input[pygame.K_UP] and not self.dino_jump and not self.dino_duck:
             self.dino_jump = True
             self.dino_run = False
-        elif not self.dino_jump:
-            self.dino_jump = False
-
-        if user_input[pygame.K_DOWN] and not self.dino_duck:
+        elif user_input[pygame.K_DOWN] and not self.dino_duck:
             self.dino_duck = True
             self.dino_run = False
-        elif not user_input[pygame.K_DOWN]:
+        elif not self.dino_jump and not user_input[pygame.K_DOWN]:
             self.dino_duck = False
-
-        if not self.dino_jump and not user_input[pygame.K_DOWN]:
+            self.dino_jump = False
             self.dino_run = True
+
 
     def run(self):
         self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]
