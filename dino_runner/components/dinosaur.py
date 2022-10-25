@@ -64,6 +64,8 @@ class Dinosaur:
         self.image = DUCKING[0] if self.step_index < 5 else DUCKING[1]
         self.dino_rect.y = Y_POS + 29
         self.step_index += 1
+        self.dino_duck = False
+
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.image,(self.dino_rect.x, self.dino_rect.y))
