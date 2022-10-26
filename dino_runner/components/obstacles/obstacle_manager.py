@@ -13,10 +13,11 @@ class ObstacleManager:
             cactus_images = [SMALL_CACTUS, LARGE_CACTUS]
             index = randint(0, 1)
             cactus_image_random = cactus_images[index]
-            cactus = Cactus(cactus_image_random)
 
             if index == 1:
                 cactus = Cactus(cactus_image_random, 300)
+            else:
+                cactus = Cactus(cactus_image_random)
 
             bird_images = BIRD
             bird = Bird(bird_images)
