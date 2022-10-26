@@ -34,7 +34,7 @@ class Obstacle(Sprite):
 
 
     def draw(self, screen):
-        if not self.is_animated:
-            return screen.blit(self.image[self.type], (self.rect.x, self.rect.y))
+        if self.is_animated:
+            return screen.blit(self.animated_image, (self.rect.x, self.rect.y))
 
-        screen.blit(self.animated_image, (self.rect.x, self.rect.y))
+        screen.blit(self.image[self.type], (self.rect.x, self.rect.y))
