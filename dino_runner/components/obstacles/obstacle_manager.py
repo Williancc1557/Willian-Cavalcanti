@@ -33,7 +33,7 @@ class ObstacleManager:
                 game.death_count += 1
 
                 if game.score > game.best_score:
-                    game.best_score = game.score
+                    game.best_score = game.score + 1
 
                 break
 
