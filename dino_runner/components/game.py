@@ -1,7 +1,7 @@
 import pygame
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
+from dino_runner.utils.constants import BG, COLORS, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
 class Game:
@@ -20,6 +20,7 @@ class Game:
         self.death_count = 0
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.best_score = 0
 
     def execute(self):
         self.running = True
@@ -32,6 +33,7 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
+        self.reset_score()
         self.obstacle_manager.reset_obstacles()
         while self.playing:
             self.events()
@@ -53,11 +55,11 @@ class Game:
     def update_score(self):
         self.score += 1
         if self.score % 100 == 0:
-            self.game_speed += 5
+            self.game_speed += 3
 
     def draw(self):
         self.clock.tick(FPS)
-        self.screen.fill((255, 255, 255)) #Também aceita código hexadecimal "#FFFFFF"
+        self.screen.fill(COLORS["WHITE"]) #Também aceita código hexadecimal "#FFFFFF"
         self.draw_background()
         self.obstacle_manager.draw(self.screen)
         self.player.draw(self.screen)
@@ -75,7 +77,7 @@ class Game:
         self.x_pos_bg -= self.game_speed
 
     def draw_score(self):
-        self.show_text(f"Score: {self.score}", (1000, 50), (0, 0, 0))
+        self.show_text(f"Score: {self.score}", (1000, 50), COLORS["BLACK"])
 
     def handle_events_on_menu(self):
         for event in pygame.event.get():
@@ -86,26 +88,47 @@ class Game:
                 self.run()
 
     def show_menu(self):
-        self.screen.fill((255, 255, 255))
+        self.screen.fill(COLORS["WHITE"])
         half_screen_width = SCREEN_WIDTH // 2
         half_screen_height = SCREEN_HEIGHT // 2
 
         if self.death_count == 0:
-            self.show_text("Press any key to start", (half_screen_width, half_screen_height), (0, 0, 0))
+            self.show_text("Press any key to start", (half_screen_width, half_screen_height), COLORS["BLACK"])
         else:
-            self.reset_game()
-            self.screen.blit(ICON, (half_screen_width - 20, half_screen_height - 140))
+            self.lost_menu()
+
         pygame.display.update()
         self.handle_events_on_menu()
 
-    def show_text(self, value: str, position: tuple, color: tuple or str):
-        font = pygame.font.Font(FONT_STYLE, 22)
+
+    def lost_menu(self):
+        half_screen_width = SCREEN_WIDTH // 2
+        half_screen_height = SCREEN_HEIGHT // 2
+
+        self.show_text(f"Your best score: {self.best_score}", (20, 20), COLORS["BLACK"], is_center=False)
+        self.show_text(f"Your deaths: {self.death_count}", (20, 60), COLORS["BLACK"], is_center=False)
+
+        icon_rect = ICON.get_rect()
+        icon_rect.center = (half_screen_width, half_screen_height - 120)
+        self.screen.blit(ICON, icon_rect)
+
+        self.show_text("You Lost", (half_screen_width, half_screen_height - 220), COLORS["RED"], 30)
+        self.show_text(f"Your score: {self.score}", (half_screen_width, half_screen_height), COLORS["BLACK"], 25)
+        self.show_text("Press any key to restart", (half_screen_width, half_screen_height + 140), COLORS["BLACK"], 22)
+
+
+    def show_text(self, value: str, position: tuple, color: tuple or str, font_size=22, is_center=True):
+        font = pygame.font.Font(FONT_STYLE, font_size)
         text = font.render(value, True, color)
         text_rect = text.get_rect()
+
         text_rect.center = position
 
-        self.screen.blit(text, text_rect)
+        position_selected = text_rect if is_center else position
 
-    def reset_game(self):
+        self.screen.blit(text, position_selected)
+
+    def reset_score(self):
         self.game_speed = 20
         self.score = 0
+
