@@ -6,4 +6,4 @@ class Bird(Obstacle):
         self.type = randint(0, 1)
         super().__init__(image, self.type, True)
         self.step_index = 0
-        self.rect.y = choice([270, 300])
+        self.rect.y = choice([240, 270, 310])

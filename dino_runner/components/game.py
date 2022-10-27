@@ -105,7 +105,7 @@ class Game:
         half_screen_width = SCREEN_WIDTH // 2
         half_screen_height = SCREEN_HEIGHT // 2
 
-        self.show_text(f"Your deaths: {self.death_count}", (20, 60), COLORS["BLACK"], is_center=False)
+        self.show_text(f"Your deaths: {self.death_count}", (20, 20), COLORS["BLACK"], is_center=False)
 
         icon_rect = ICON.get_rect()
         icon_rect.center = (half_screen_width, half_screen_height - 120)
@@ -114,7 +114,7 @@ class Game:
         self.show_text("You Lost", (half_screen_width, half_screen_height - 220), COLORS["RED"], 30)
         self.show_text(f"Your score: {self.score}", (half_screen_width, half_screen_height), COLORS["BLACK"], 25)
         self.show_text(f"Your best score: {self.best_score}", (half_screen_width, half_screen_height + 40), COLORS["BLACK"])
-        self.show_text("Press any key to restart", (half_screen_width, half_screen_height + 140), COLORS["BLACK"], 22)
+        self.show_text("Press any key to restart", (half_screen_width, half_screen_height + 160), COLORS["BLACK"], 22)
 
 
     def show_text(self, value: str, position: tuple, color: tuple or str, font_size=22, is_center=True):
