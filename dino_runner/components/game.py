@@ -1,7 +1,7 @@
 import pygame
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, GAME_OVER, ICON, RESET, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import show_text
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
@@ -135,17 +135,19 @@ class Game:
 
         show_text(f"Your deaths: {self.death_count}", (20, 20), COLORS["BLACK"], is_center=False, screen=self.screen)
 
-        icon_rect = ICON.get_rect()
-        icon_rect.center = (half_screen_width, half_screen_height - 120)
-        self.screen.blit(ICON, icon_rect)
+        self.screen.blit(ICON, self.centralize(ICON, half_screen_width, half_screen_height - 120))
+        self.screen.blit(GAME_OVER, self.centralize(GAME_OVER, half_screen_width, half_screen_height - 220))
 
-        show_text("You Lost", (half_screen_width, half_screen_height - 220), COLORS["RED"], 30, screen=self.screen)
         show_text(f"Your score: {self.score}", (half_screen_width, half_screen_height), COLORS["BLACK"], 25, screen=self.screen)
         show_text(f"Your best score: {self.best_score}", (half_screen_width, half_screen_height + 40), COLORS["BLACK"], screen=self.screen)
         show_text("Press any key to restart", (half_screen_width, half_screen_height + 160), COLORS["BLACK"], 22, screen=self.screen)
-
+        self.screen.blit(RESET, self.centralize(RESET, half_screen_width, half_screen_height + 240))
 
     def reset_score(self):
         self.game_speed = 20
         self.score = 0
 
+    def centralize(self, image, width, height):
+        image_rect = image.get_rect()
+        image_rect.center = (width, height)
+        return image_rect
