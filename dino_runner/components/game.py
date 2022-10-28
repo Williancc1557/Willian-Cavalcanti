@@ -18,7 +18,7 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
-        self.y_pos_cloud = 80
+        self.y_pos_cloud = 120
         self.score = 0
         self.death_count = 0
         self.player = Dinosaur()
