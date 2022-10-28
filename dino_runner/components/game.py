@@ -1,7 +1,9 @@
+from sre_constants import JUMP
+from tracemalloc import start
 import pygame
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, GAME_OVER, ICON, LIFE, RESET, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, GAME_OVER, ICON, JUMPING, LIFE, RESET, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import show_text
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
@@ -119,17 +121,22 @@ class Game:
 
     def show_menu(self):
         self.screen.fill(COLORS["WHITE"])
-        half_screen_width = SCREEN_WIDTH // 2
-        half_screen_height = SCREEN_HEIGHT // 2
+
 
         if self.death_count == 0:
-            show_text("Press any key to start", (half_screen_width, half_screen_height), COLORS["BLACK"], screen=self.screen)
+            self.start_menu()
         else:
             self.lost_menu()
 
         pygame.display.update()
         self.handle_events_on_menu()
 
+    def start_menu(self):
+        half_screen_width = SCREEN_WIDTH // 2
+        half_screen_height = SCREEN_HEIGHT // 2
+
+        self.screen.blit(JUMPING, self.centralize(JUMPING, half_screen_width, half_screen_height - 120))
+        show_text("Press any key to start", (half_screen_width, half_screen_height), COLORS["BLACK"], screen=self.screen)
 
     def lost_menu(self):
         half_screen_width = SCREEN_WIDTH // 2
