@@ -86,7 +86,7 @@ class Game:
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(CLOUD, (self.x_pos_bg, self.y_pos_cloud))
         self.screen.blit(CLOUD, (image_width + self.x_pos_bg, self.y_pos_cloud))
-        
+
         if self.x_pos_bg <= -image_width:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
