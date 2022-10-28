@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import DUCKING_HAMMER, HAMMER, HAMMER_TYPE, JUMPING_HAMMER, RUNNING, JUMPING, DUCKING, DEFAULT_TYPE, RUNNING_HAMMER, SHIELD_TYPE, DUCKING_SHIELD, JUMPING_SHIELD, RUNNING_SHIELD
+from dino_runner.utils.text_utils import show_text
 
 DUCK_IMG = {
     DEFAULT_TYPE: DUCKING,
@@ -36,6 +37,8 @@ class Dinosaur(Sprite):
         self.dino_run = True
         self.jump_vel = JUMP_VEL
         self.dino_duck = False
+        self.dino_life = 3
+        self.kills = 0
         self.setup_state()
 
     def setup_state(self):
@@ -66,6 +69,9 @@ class Dinosaur(Sprite):
             self.dino_jump = False
             self.dino_run = True
 
+
+    def blink(self):
+        self.image = None
 
     def run(self):
         self.image = RUN_IMG[self.type][self.step_index // 5]

@@ -83,3 +83,4 @@ COLORS = {
     "RED": (242, 0, 0)
 }
 
+LIFE = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))

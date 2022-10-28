@@ -1,7 +1,7 @@
 import pygame
 
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, GAME_OVER, ICON, RESET, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from dino_runner.utils.constants import BG, CLOUD, COLORS, FONT_STYLE, GAME_OVER, ICON, LIFE, RESET, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.text_utils import show_text
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
@@ -35,13 +35,14 @@ class Game:
         pygame.quit()
 
     def run(self):
-        # Game loop: events - update - draw
         self.playing = True
         self.reset_score()
         self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups()
         self.game_speed = 20
         self.score = 0
+        self.player.dino_life = 3
+
         while self.playing:
             self.events()
             self.update()
@@ -76,6 +77,7 @@ class Game:
         self.player.draw(self.screen)
         self.draw_power_up_time()
         self.draw_score()
+        self.draw_life()
         self.power_up_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
@@ -151,3 +153,13 @@ class Game:
         image_rect = image.get_rect()
         image_rect.center = (width, height)
         return image_rect
+
+    def draw_life(self):
+        self.screen.blit(LIFE, (10, 10))
+        show_text(
+            str(self.player.dino_life),
+            position=(50, 10),
+            color=COLORS["BLACK"],
+            is_center=False,
+            screen=self.screen
+        )
